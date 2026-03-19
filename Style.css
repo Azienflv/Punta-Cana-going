@@ -1,38 +1,95 @@
-body{
-
-font-family:Arial;
-padding:20px;
-background:#f4f4f4;
-
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #f5f6fa;
 }
 
-h1{
-
-color:#0a6ebd;
-
+.container {
+  display: flex;
 }
 
-.menu button{
-
-margin:5px;
-padding:10px;
-background:#0a6ebd;
-color:white;
-border:none;
-
+/* SIDEBAR */
+.sidebar {
+  width: 250px;
+  background: #ffffff;
+  height: 100vh;
+  padding: 20px;
+  border-right: 1px solid #ddd;
 }
 
-input,select{
-
-display:block;
-margin:10px 0;
-padding:10px;
-width:250px;
-
+.sidebar h2 {
+  margin-bottom: 20px;
 }
 
-.seccion{
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
 
-display:none;
+.sidebar li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
 
+.sidebar li:hover {
+  background: #eee;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+}
+
+/* HEADER */
+.header {
+  background: #1e73be;
+  padding: 15px;
+}
+
+.header input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+/* CONTENT */
+.content {
+  padding: 20px;
+}
+
+/* CARDS */
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* INPUTS */
+input, select {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+/* BUTTON */
+button {
+  background: #1e73be;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* SECCIONES */
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
 }
