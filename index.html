@@ -1,47 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PCG Tours Panel</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>PCG Tours Panel</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<h1>PCG Tours - Reservation Panel</h1>
+<div class="container">
 
-<form id="form">
-<input type="text" placeholder="Client Name" id="client">
-<input type="text" placeholder="Hotel" id="hotel">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>PCG Tours</h2>
+    <ul>
+      <li onclick="showSection('reservas')">📋 Lista de Reservas</li>
+      <li onclick="showSection('nueva')">➕ Nueva Reserva</li>
+      <li>📦 Catálogo</li>
+      <li>🚐 Traslados</li>
+    </ul>
+  </aside>
 
-<select id="excursion">
-<option>Buggies</option>
-<option>Saona</option>
-<option>Party Boat</option>
-<option>Santo Domingo</option>
-<option>Dolphins</option>
-<option>Safari</option>
-<option>Island Catalina</option>
-<option>Domitai</option>
-<option>Scape Park</option>
-<option>El Dorado Park</option>
-<option>Jet Ski</option>
-</select>
+  <!-- MAIN -->
+  <main class="main">
 
-<input type="number" placeholder="Adults" id="adults">
-<input type="number" placeholder="Kids" id="kids">
-<input type="number" placeholder="Total Price" id="price">
+    <!-- HEADER -->
+    <header class="header">
+      <input type="text" placeholder="Buscar...">
+    </header>
 
-<button type="submit">Save Reservation</button>
+    <!-- CONTENIDO -->
+    <section class="content">
 
-</form>
+      <!-- NUEVA RESERVA -->
+      <div id="nueva" class="section active">
+
+        <h2>Reserva de Excursión</h2>
+
+        <div class="card">
+          <h3>Información</h3>
+
+          <input id="cliente" placeholder="Nombre del cliente">
+          <input id="hotel" placeholder="Hotel">
+
+          <select id="tour">
+            <option>Buggies</option>
+            <option>Isla Saona</option>
+          </select>
+
+          <input id="adultos" type="number" placeholder="Adultos">
+          <input id="ninos" type="number" placeholder="Niños">
+
+          <button onclick="guardarReserva()">Guardar</button>
+        </div>
+
+      </div>
+
+      <!-- LISTA -->
+      <div id="reservas" class="section">
+        <h2>Reservas</h2>
+        <div id="lista"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
 
 <script src="app.js"></script>
-
-<h2>Reservations</h2>
-<div id="reservationsList"></div>
-
 </body>
 </html>
-
