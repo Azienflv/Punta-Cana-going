@@ -1,29 +1,60 @@
-document.getElementById("form").addEventListener("submit", function(e){
-
-e.preventDefault()
-
-let client = document.getElementById("client").value
-let hotel = document.getElementById("hotel").value
-let excursion = document.getElementById("excursion").value
-let adults = document.getElementById("adults").value
-let kids = document.getElementById("kids").value
-let price = document.getElementById("price").value
-
-let reservation = {
-client,
-hotel,
-excursion,
-adults,
-kids,
-price
+function getReservations() {
+    return JSON.parse(localStorage.getItem("reservations")) || []
 }
 
-let data = JSON.parse(localStorage.getItem("reservations")) || []
+function saveReservations(data) {
+    localStorage.setItem("reservations", JSON.stringify(data))
+}
 
-data.push(reservation)
+function renderReservations() {
+    let list = document.getElementById("reservationsList")
+    list.innerHTML = ""
 
-localStorage.setItem("reservations", JSON.stringify(data))
+    let data = getReservations()
 
-alert("Reservation Saved!")
+    data.forEach((res, index) => {
+        let div = document.createElement("div")
 
+        div.innerHTML = `
+        <p><b>${res.client}</b> - ${res.excursion}</p>
+        <p>Hotel: ${res.hotel}</p>
+        <p>Total: $${res.price}</p>
+        <button onclick="deleteReservation(${index})">Delete</button>
+        <hr>
+        `
+
+        list.appendChild(div)
+    })
+}
+
+function deleteReservation(index) {
+    let data = getReservations()
+    data.splice(index, 1)
+    saveReservations(data)
+    renderReservations()
+}
+
+document.getElementById("form").addEventListener("submit", function(e){
+
+    e.preventDefault()
+
+    let reservation = {
+        client: document.getElementById("client").value,
+        hotel: document.getElementById("hotel").value,
+        excursion: document.getElementById("excursion").value,
+        adults: document.getElementById("adults").value,
+        kids: document.getElementById("kids").value,
+        price: document.getElementById("price").value
+    }
+
+    let data = getReservations()
+    data.push(reservation)
+
+    saveReservations(data)
+
+    alert("Reservation Saved!")
+
+    renderReservations()
 })
+
+renderReservations()
