@@ -1,60 +1,47 @@
-function getReservations() {
-    return JSON.parse(localStorage.getItem("reservations")) || []
+let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
+
+function showSection(id) {
+  document.querySelectorAll(".section").forEach(sec => {
+    sec.classList.remove("active");
+  });
+  document.getElementById(id).classList.add("active");
 }
 
-function saveReservations(data) {
-    localStorage.setItem("reservations", JSON.stringify(data))
+function guardarReserva() {
+  const cliente = document.getElementById("cliente").value;
+  const hotel = document.getElementById("hotel").value;
+  const tour = document.getElementById("tour").value;
+  const adultos = document.getElementById("adultos").value;
+  const ninos = document.getElementById("ninos").value;
+
+  const reserva = { cliente, hotel, tour, adultos, ninos };
+
+  reservas.push(reserva);
+  localStorage.setItem("reservas", JSON.stringify(reservas));
+
+  alert("Reserva guardada ✅");
+
+  mostrarReservas();
 }
 
-function renderReservations() {
-    let list = document.getElementById("reservationsList")
-    list.innerHTML = ""
+function mostrarReservas() {
+  const lista = document.getElementById("lista");
+  lista.innerHTML = "";
 
-    let data = getReservations()
+  reservas.forEach(r => {
+    const div = document.createElement("div");
+    div.classList.add("card");
 
-    data.forEach((res, index) => {
-        let div = document.createElement("div")
+    div.innerHTML = `
+      <strong>${r.cliente}</strong><br>
+      Hotel: ${r.hotel}<br>
+      Tour: ${r.tour}<br>
+      Adultos: ${r.adultos} | Niños: ${r.ninos}
+    `;
 
-        div.innerHTML = `
-        <p><b>${res.client}</b> - ${res.excursion}</p>
-        <p>Hotel: ${res.hotel}</p>
-        <p>Total: $${res.price}</p>
-        <button onclick="deleteReservation(${index})">Delete</button>
-        <hr>
-        `
-
-        list.appendChild(div)
-    })
+    lista.appendChild(div);
+  });
 }
 
-function deleteReservation(index) {
-    let data = getReservations()
-    data.splice(index, 1)
-    saveReservations(data)
-    renderReservations()
-}
-
-document.getElementById("form").addEventListener("submit", function(e){
-
-    e.preventDefault()
-
-    let reservation = {
-        client: document.getElementById("client").value,
-        hotel: document.getElementById("hotel").value,
-        excursion: document.getElementById("excursion").value,
-        adults: document.getElementById("adults").value,
-        kids: document.getElementById("kids").value,
-        price: document.getElementById("price").value
-    }
-
-    let data = getReservations()
-    data.push(reservation)
-
-    saveReservations(data)
-
-    alert("Reservation Saved!")
-
-    renderReservations()
-})
-
-renderReservations()
+// Cargar al inicio
+mostrarReservas();
