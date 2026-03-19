@@ -1,24 +1,35 @@
 body {
   margin: 0;
-  font-family: Arial;
-  background: #f5f6fa;
+  font-family: 'Roboto', sans-serif;
+  background: #eef1f5;
 }
 
-.container {
+.layout {
   display: flex;
 }
 
 /* SIDEBAR */
 .sidebar {
-  width: 250px;
+  width: 260px;
   background: #ffffff;
   height: 100vh;
-  padding: 20px;
   border-right: 1px solid #ddd;
 }
 
-.sidebar h2 {
-  margin-bottom: 20px;
+.profile {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #f0c9a4, #e6b48c);
+}
+
+.profile img {
+  border-radius: 50%;
+}
+
+.menu-title {
+  padding: 15px;
+  font-size: 14px;
+  color: #777;
 }
 
 .sidebar ul {
@@ -27,13 +38,12 @@ body {
 }
 
 .sidebar li {
-  padding: 10px;
+  padding: 12px 20px;
   cursor: pointer;
-  border-radius: 5px;
 }
 
 .sidebar li:hover {
-  background: #eee;
+  background: #f2f2f2;
 }
 
 /* MAIN */
@@ -41,51 +51,78 @@ body {
   flex: 1;
 }
 
-/* HEADER */
-.header {
+/* TOPBAR */
+.topbar {
   background: #1e73be;
   padding: 15px;
 }
 
-.header input {
-  width: 100%;
+.topbar input {
+  width: 300px;
   padding: 10px;
-  border: none;
   border-radius: 5px;
+  border: none;
 }
 
 /* CONTENT */
 .content {
-  padding: 20px;
+  padding: 25px;
 }
 
-/* CARDS */
+/* TITLES */
+.title {
+  color: #1e73be;
+  margin-bottom: 20px;
+}
+
+/* GRID */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* CARD */
 .card {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
 }
 
 /* INPUTS */
+label {
+  font-size: 13px;
+  color: #555;
+}
+
 input, select {
-  display: block;
   width: 100%;
-  margin-bottom: 10px;
   padding: 10px;
+  margin: 5px 0 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 /* BUTTON */
 button {
+  width: 100%;
   background: #1e73be;
   color: white;
+  padding: 12px;
   border: none;
-  padding: 10px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-/* SECCIONES */
+/* GRID LIST */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+/* SECTIONS */
 .section {
   display: none;
 }
