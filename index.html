@@ -102,7 +102,7 @@
           <button onclick="guardarExcursion()">Guardar Excursión</button>
         </div>
 
-        <!-- LISTA DINÁMICA -->
+        <!-- LISTA -->
         <div id="listaExcursiones" class="grid"></div>
 
       </div>
@@ -124,13 +124,15 @@
     projectId: "pcg-tours",
     storageBucket: "pcg-tours.firebasestorage.app",
     messagingSenderId: "1083838768453",
-    appId: "1:1083838768453:web:ac6c14716e8c7abb844a2c",
-    measurementId: "G-FJ1JGL75DB"
+    appId: "1:1083838768453:web:ac6c14716e8c7abb844a2c"
   };
 
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 </script>
+
+<!-- 🔥 LIBRERÍA PDF (OBLIGATORIO) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 <!-- TU JS -->
 <script src="app.js"></script>
