@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>PCG Tours Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
@@ -15,17 +17,17 @@
   <aside class="sidebar">
     <div class="profile">
       <img src="https://i.pravatar.cc/80">
-      <h3>Usuario</h3>
+      <h3>PCG Tours</h3>
     </div>
 
     <nav>
-      <p class="menu-title" onclick="toggleMenu()">Excursiones ⬇</p>
+      <p class="menu-title" onclick="toggleMenu()">Menú ⬇</p>
 
-      <ul id="submenuExcursiones" style="display:none;">
-        <li onclick="showSection('dashboard')">Dashboard</li>
-        <li onclick="showSection('nueva')">Nueva Reserva</li>
-        <li onclick="showSection('reservas')">Reservas Realizadas</li>
-        <li onclick="showSection('excursiones')">Gestión de Excursiones</li>
+      <ul id="submenuExcursiones" style="display:block;">
+        <li onclick="showSection('dashboard')">📊 Dashboard</li>
+        <li onclick="showSection('nueva')">➕ Nueva Reserva</li>
+        <li onclick="showSection('reservas')">📋 Reservas</li>
+        <li onclick="showSection('excursiones')">🏝 Excursiones</li>
       </ul>
     </nav>
   </aside>
@@ -34,7 +36,7 @@
   <main class="main">
 
     <header class="topbar">
-      <input type="text" placeholder="Buscar">
+      <input type="text" placeholder="Buscar (próximamente)">
     </header>
 
     <div class="content">
@@ -68,7 +70,9 @@
         <div class="card">
           <input id="cliente" placeholder="Cliente">
           <input id="hotel" placeholder="Hotel">
+
           <select id="tour"></select>
+
           <input type="date" id="fecha">
 
           <input id="adultos" type="number" placeholder="Adultos">
@@ -77,7 +81,7 @@
 
           <input id="total" readonly placeholder="Total">
 
-          <button onclick="guardarReserva()">Guardar</button>
+          <button onclick="guardarReserva()">💾 Guardar Reserva</button>
         </div>
       </div>
 
@@ -95,7 +99,7 @@
           <input id="nombreExcursion" placeholder="Nombre">
           <input id="precioAdulto" type="number" placeholder="Adulto">
           <input id="precioNino" type="number" placeholder="Niño">
-          <button onclick="guardarExcursion()">Guardar</button>
+          <button onclick="guardarExcursion()">Guardar Excursión</button>
         </div>
 
         <div id="listaExcursiones" class="grid"></div>
