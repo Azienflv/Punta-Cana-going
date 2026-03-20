@@ -7,16 +7,26 @@ function showSection(id) {
   document.getElementById(id).classList.add("active");
 }
 
-async function guardarReserva() {
+function guardarReserva() {
 
   const reserva = {
-    cliente: cliente.value,
-    hotel: hotel.value,
-    tour: tour.value,
-    adultos: adultos.value,
-    ninos: ninos.value,
+    cliente: document.getElementById("cliente").value,
+    hotel: document.getElementById("hotel").value,
+    tour: document.getElementById("tour").value,
+    adultos: document.getElementById("adultos").value,
+    ninos: document.getElementById("ninos").value,
     fecha: new Date()
   };
+
+  db.collection("reservas").add(reserva)
+    .then(() => {
+      alert("Guardado en Firebase ✅");
+      mostrarReservas();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
 
   try {
     await db.collection("reservas").add(reserva);
