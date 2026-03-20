@@ -6,6 +6,37 @@ function showSection(id) {
   document.getElementById(id).classList.add("active");
 }
 
+// 🔥 GENERAR VOUCHER PDF
+function generarVoucher(reserva) {
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(18);
+  doc.text("PCG TOURS", 20, 20);
+
+  doc.setFontSize(12);
+  doc.text("Voucher de Reserva", 20, 30);
+
+  doc.line(20, 35, 190, 35);
+
+  doc.text(`Cliente: ${reserva.cliente}`, 20, 50);
+  doc.text(`Hotel: ${reserva.hotel}`, 20, 60);
+  doc.text(`Excursión: ${reserva.tour}`, 20, 70);
+  doc.text(`Fecha: ${reserva.fecha}`, 20, 80);
+
+  doc.text(`Adultos: ${reserva.adultos}`, 20, 95);
+  doc.text(`Niños: ${reserva.ninos}`, 20, 105);
+
+  doc.text(`Descuento: ${reserva.descuento}`, 20, 120);
+  doc.text(`Total: ${reserva.total}`, 20, 130);
+
+  doc.line(20, 140, 190, 140);
+  doc.text("Gracias por elegir PCG Tours", 20, 155);
+
+  doc.save(`voucher_${reserva.cliente}.pdf`);
+}
+
 // 🔥 GUARDAR EXCURSIÓN
 function guardarExcursion() {
 
@@ -28,6 +59,32 @@ function guardarExcursion() {
   });
 }
 
+// 🔥 ELIMINAR EXCURSIÓN
+function eliminarExcursion(id) {
+  if (!confirm("¿Eliminar excursión?")) return;
+
+  db.collection("excursiones").doc(id).delete()
+    .then(() => {
+      alert("Eliminado ✅");
+      cargarExcursiones();
+    });
+}
+
+// 🔥 EDITAR EXCURSIÓN
+function editarExcursion(id) {
+
+  const precioAdulto = document.getElementById(`adulto-${id}`).value;
+  const precioNino = document.getElementById(`nino-${id}`).value;
+
+  db.collection("excursiones").doc(id).update({
+    precioAdulto,
+    precioNino
+  }).then(() => {
+    alert("Actualizado ✅");
+    cargarExcursiones();
+  });
+}
+
 // 🔥 CARGAR EXCURSIONES
 function cargarExcursiones() {
 
@@ -45,14 +102,18 @@ function cargarExcursiones() {
 
       const e = doc.data();
 
-      // Mostrar en lista
       lista.innerHTML += `
         <div class="card">
-          ${e.nombre} - 👨 ${e.precioAdulto} / 👶 ${e.precioNino}
+          <b>${e.nombre}</b><br>
+
+          👨 <input id="adulto-${doc.id}" value="${e.precioAdulto}">
+          👶 <input id="nino-${doc.id}" value="${e.precioNino}"><br><br>
+
+          <button onclick="editarExcursion('${doc.id}')">💾</button>
+          <button onclick="eliminarExcursion('${doc.id}')">🗑️</button>
         </div>
       `;
 
-      // Agregar al select
       select.innerHTML += `
         <option value="${e.nombre}" 
           data-adulto="${e.precioAdulto}" 
@@ -65,7 +126,7 @@ function cargarExcursiones() {
   });
 }
 
-// 🔥 CALCULAR TOTAL AUTOMÁTICO
+// 🔥 CALCULAR TOTAL
 function calcularTotal() {
 
   const select = document.getElementById("tour");
@@ -86,13 +147,9 @@ function calcularTotal() {
   document.getElementById("total").value = total;
 }
 
-// 🔥 EVENTOS AUTOMÁTICOS
+// 🔥 EVENTOS
 document.addEventListener("input", function(e) {
-  if (
-    e.target.id === "adultos" ||
-    e.target.id === "ninos" ||
-    e.target.id === "descuento"
-  ) {
+  if (["adultos", "ninos", "descuento"].includes(e.target.id)) {
     calcularTotal();
   }
 });
@@ -103,44 +160,40 @@ document.addEventListener("change", function(e) {
   }
 });
 
-// 🔥 GUARDAR RESERVA COMPLETA
+// 🔥 GUARDAR RESERVA
 function guardarReserva() {
 
-  const cliente = document.getElementById("cliente").value;
-  const hotel = document.getElementById("hotel").value;
-  const tour = document.getElementById("tour").value;
-  const adultos = document.getElementById("adultos").value;
-  const ninos = document.getElementById("ninos").value;
-  const fecha = document.getElementById("fecha").value;
-  const descuento = document.getElementById("descuento").value;
-  const total = document.getElementById("total").value;
-
-  if (!cliente || !hotel) {
-    alert("Completa los campos");
-    return;
-  }
-
   const reserva = {
-    cliente,
-    hotel,
-    tour,
-    adultos,
-    ninos,
-    fecha,
-    descuento,
-    total,
-    estado: "confirmada"
+    cliente: cliente.value,
+    hotel: hotel.value,
+    tour: tour.value,
+    adultos: adultos.value,
+    ninos: ninos.value,
+    fecha: fecha.value,
+    descuento: descuento.value,
+    total: total.value
   };
 
   db.collection("reservas").add(reserva)
     .then(() => {
       alert("Reserva guardada ✅");
+
+      generarVoucher(reserva); // 🔥 genera PDF
+
       limpiarFormulario();
       mostrarReservas();
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      alert("Error al guardar");
+    });
+}
+
+// 🔥 ELIMINAR RESERVA
+function eliminarReserva(id) {
+
+  if (!confirm("¿Eliminar reserva?")) return;
+
+  db.collection("reservas").doc(id).delete()
+    .then(() => {
+      alert("Eliminada ✅");
+      mostrarReservas();
     });
 }
 
@@ -153,6 +206,7 @@ function mostrarReservas() {
   db.collection("reservas").get().then((querySnapshot) => {
 
     querySnapshot.forEach((doc) => {
+
       const r = doc.data();
 
       lista.innerHTML += `
@@ -160,7 +214,10 @@ function mostrarReservas() {
           <b>${r.cliente}</b><br>
           ${r.tour}<br>
           📅 ${r.fecha}<br>
-          💰 ${r.total}
+          💰 ${r.total}<br><br>
+
+          <button onclick='generarVoucher(${JSON.stringify(r)})'>🧾</button>
+          <button onclick="eliminarReserva('${doc.id}')">🗑️</button>
         </div>
       `;
     });
@@ -168,17 +225,17 @@ function mostrarReservas() {
   });
 }
 
-// 🔥 LIMPIAR FORMULARIO
+// 🔥 LIMPIAR
 function limpiarFormulario() {
-  document.getElementById("cliente").value = "";
-  document.getElementById("hotel").value = "";
-  document.getElementById("adultos").value = "";
-  document.getElementById("ninos").value = "";
-  document.getElementById("descuento").value = "";
-  document.getElementById("total").value = "";
+  cliente.value = "";
+  hotel.value = "";
+  adultos.value = "";
+  ninos.value = "";
+  descuento.value = "";
+  total.value = "";
 }
 
-// 🔥 CARGA INICIAL
+// 🔥 INICIO
 window.onload = () => {
   mostrarReservas();
   cargarExcursiones();
