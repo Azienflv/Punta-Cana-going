@@ -46,23 +46,26 @@ function guardarReserva() {
   alert("Guardado ✔");
 }
 
-async function mostrarReservas() {
+function mostrarReservas() {
 
+  const lista = document.getElementById("lista");
   lista.innerHTML = "";
 
-  const querySnapshot = await db.collection("reservas").get();
+  db.collection("reservas").get().then((querySnapshot) => {
 
-  querySnapshot.forEach((doc) => {
-    const r = doc.data();
+    querySnapshot.forEach((doc) => {
+      const r = doc.data();
 
-    lista.innerHTML += `
-      <div class="card">
-        <b>${r.cliente}</b><br>
-        ${r.hotel}<br>
-        ${r.tour}<br>
-        👨 ${r.adultos} | 👶 ${r.ninos}
-      </div>
-    `;
+      lista.innerHTML += `
+        <div class="card">
+          <b>${r.cliente}</b><br>
+          ${r.hotel}<br>
+          ${r.tour}<br>
+          👨 ${r.adultos} | 👶 ${r.ninos}
+        </div>
+      `;
+    });
+
   });
 }
 
