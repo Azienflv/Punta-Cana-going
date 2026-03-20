@@ -124,18 +124,113 @@ function guardarReserva() {
   });
 }
 
-// 🔹 VOUCHER PDF
+
+  :::writing{variant=“standard” id=“voucher-pro”}
+/* 🔥 VOUCHER PROFESIONAL ESTILO AGENCIA */
 function generarVoucher(r) {
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+const { jsPDF } = window.jspdf;
+const doc = new jsPDF();
 
-  doc.text(`Cliente: ${r.cliente}`, 10, 20);
-  doc.text(`Tour: ${r.tour}`, 10, 30);
-  doc.text(`Total: ${r.total}`, 10, 40);
+// 🔹 HEADER
+doc.setFillColor(230, 230, 230);
+doc.rect(0, 0, 210, 30, “F”);
 
-  doc.save(`voucher_${r.cliente}.pdf`);
+doc.setFontSize(18);
+doc.setTextColor(40);
+doc.text(“Cupón de Excursión”, 20, 15);
+
+doc.setFontSize(12);
+doc.text(“Tour Voucher”, 20, 22);
+
+doc.setFontSize(14);
+doc.text(“PCG TOURS”, 150, 18);
+
+// 🔹 INFO GENERAL
+doc.setFontSize(11);
+doc.text(“AGENCIA: PCG TOURS”, 20, 40);
+doc.text(“NO. TICKET: “ + generarTicket(), 140, 40);
+
+doc.line(20, 45, 190, 45);
+
+// 🔹 TITULO TOUR
+doc.setFontSize(16);
+doc.text(r.tour.toUpperCase(), 20, 60);
+
+doc.setFontSize(12);
+doc.text(r.tour, 20, 68);
+
+// 🔹 CLIENTE
+doc.setFontSize(11);
+doc.text(“NOMBRE / NAME: “ + r.cliente, 20, 85);
+doc.text(“HOTEL: “ + r.hotel, 20, 95);
+
+doc.text(“PICK UP: RECEPCIÓN (PENDIENTE)”, 20, 105);
+
+doc.text(“NO. RESERVA: “ + generarReservaID(), 130, 85);
+doc.text(“FECHA / DATE: “ + r.fecha, 130, 95);
+doc.text(PAXS: ${r.adultos} ADL / ${r.ninos} CHD, 130, 105);
+
+doc.line(20, 115, 190, 115);
+
+// 🔹 POLÍTICAS (MISMAS QUE TU IMAGEN)
+doc.setFontSize(9);
+
+doc.text(“POLÍTICAS DE CANCELACIÓN Y/O REEMBOLSO”, 20, 125);
+
+doc.text(
+“a) Las cancelaciones son aceptadas con 48 hrs antes del inicio del servicio y para recibir reembolso es necesario presentar el cupón original de la compra.”,
+20, 132,
+{ maxWidth: 170 }
+);
+
+doc.text(
+“b) Para cancelaciones por enfermedad, el cliente deberá presentar Certificado Médico expedido por el médico del hotel o clínica privada.”,
+20, 140,
+{ maxWidth: 170 }
+);
+
+doc.text(
+“c) No se aceptan cancelaciones el mismo día de la actividad.”,
+20, 148,
+{ maxWidth: 170 }
+);
+
+doc.text(
+“d) No habrá reembolsos en caso de no presentarse.”,
+20, 156,
+{ maxWidth: 170 }
+);
+
+doc.text(
+“e) No aplican reembolsos en paquetes o tours con descuento.”,
+20, 164,
+{ maxWidth: 170 }
+);
+
+// 🔹 TOTAL
+doc.setFontSize(14);
+doc.text(TOTAL: $${r.total}, 20, 180);
+
+// 🔹 FOOTER
+doc.setFontSize(10);
+doc.text(“Gracias por reservar con PCG TOURS”, 20, 200);
+
+// 🔹 EXPORTAR
+doc.save(Voucher_${r.cliente}.pdf);
 }
+
+/* 🔥 GENERAR ID RESERVA */
+function generarReservaID() {
+return “PCG-” + Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+/* 🔥 GENERAR TICKET */
+function generarTicket() {
+return Math.floor(100000 + Math.random() * 900000);
+}
+:::
+
 
 // 🔹 MOSTRAR RESERVAS
 function mostrarReservas() {
