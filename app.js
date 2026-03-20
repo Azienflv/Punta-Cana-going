@@ -1,4 +1,10 @@
-// CAMBIO DE SECCIÓN
+// 🔹 MENÚ DESPLEGABLE
+function toggleMenu() {
+  const menu = document.getElementById("submenuExcursiones");
+  menu.style.display = menu.style.display === "none" ? "block" : "none";
+}
+
+// 🔹 CAMBIO DE SECCIÓN
 function showSection(id) {
   document.querySelectorAll(".section").forEach(sec => {
     sec.classList.remove("active");
@@ -9,7 +15,7 @@ function showSection(id) {
   if (id === "dashboard") cargarDashboard();
 }
 
-// DASHBOARD
+// 🔹 DASHBOARD
 function cargarDashboard() {
 
   let totalIngresos = 0;
@@ -21,7 +27,6 @@ function cargarDashboard() {
   db.collection("reservas").get().then(snapshot => {
 
     snapshot.forEach(doc => {
-
       const r = doc.data();
       const total = parseFloat(r.total) || 0;
 
@@ -31,7 +36,9 @@ function cargarDashboard() {
       if (r.fecha === hoy) ingresosHoy += total;
     });
 
-    totalIngresos && (totalIngresos = totalIngresos.toFixed(2));
+    totalIngresos = totalIngresos.toFixed(2);
+
+    totalIngresos && (totalIngresos = totalIngresos);
 
     document.getElementById("totalIngresos").innerText = totalIngresos;
     document.getElementById("totalReservas").innerText = totalReservas;
@@ -39,7 +46,7 @@ function cargarDashboard() {
   });
 }
 
-// GUARDAR EXCURSIÓN
+// 🔹 EXCURSIONES
 function guardarExcursion() {
   db.collection("excursiones").add({
     nombre: nombreExcursion.value,
@@ -48,7 +55,6 @@ function guardarExcursion() {
   }).then(() => cargarExcursiones());
 }
 
-// CARGAR EXCURSIONES
 function cargarExcursiones() {
 
   listaExcursiones.innerHTML = "";
@@ -78,7 +84,7 @@ function cargarExcursiones() {
   });
 }
 
-// CALCULAR TOTAL
+// 🔹 CALCULAR TOTAL
 function calcularTotal() {
 
   const option = tour.options[tour.selectedIndex];
@@ -97,7 +103,7 @@ function calcularTotal() {
 document.addEventListener("input", calcularTotal);
 document.addEventListener("change", calcularTotal);
 
-// GUARDAR RESERVA
+// 🔹 GUARDAR RESERVA
 function guardarReserva() {
 
   const reserva = {
@@ -114,11 +120,13 @@ function guardarReserva() {
   db.collection("reservas").add(reserva).then(() => {
     generarVoucher(reserva);
     mostrarReservas();
+    cargarDashboard();
   });
 }
 
-// VOUCHER
+// 🔹 VOUCHER PDF
 function generarVoucher(r) {
+
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
@@ -126,10 +134,10 @@ function generarVoucher(r) {
   doc.text(`Tour: ${r.tour}`, 10, 30);
   doc.text(`Total: ${r.total}`, 10, 40);
 
-  doc.save("voucher.pdf");
+  doc.save(`voucher_${r.cliente}.pdf`);
 }
 
-// MOSTRAR RESERVAS
+// 🔹 MOSTRAR RESERVAS
 function mostrarReservas() {
 
   lista.innerHTML = "";
@@ -151,7 +159,7 @@ function mostrarReservas() {
   });
 }
 
-// INICIO
+// 🔹 INICIO
 window.onload = () => {
   mostrarReservas();
   cargarExcursiones();
