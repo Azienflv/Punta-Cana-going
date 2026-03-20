@@ -1,3 +1,4 @@
+/* GENERAL */
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
@@ -14,6 +15,7 @@ body {
   background: #ffffff;
   height: 100vh;
   border-right: 1px solid #ddd;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
 }
 
 .profile {
@@ -24,26 +26,40 @@ body {
 
 .profile img {
   border-radius: 50%;
+  margin-bottom: 10px;
 }
 
 .menu-title {
   padding: 15px;
   font-size: 14px;
-  color: #777;
+  color: #555;
+  cursor: pointer;
+  font-weight: bold;
+  border-top: 1px solid #eee;
+}
+
+/* SUBMENU */
+#submenuExcursiones {
+  transition: all 0.3s ease;
 }
 
 .sidebar ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .sidebar li {
-  padding: 12px 20px;
+  padding: 12px 25px;
   cursor: pointer;
+  font-size: 14px;
+  color: #444;
+  transition: all 0.2s;
 }
 
 .sidebar li:hover {
   background: #f2f2f2;
+  padding-left: 30px;
 }
 
 /* MAIN */
@@ -55,6 +71,8 @@ body {
 .topbar {
   background: #1e73be;
   padding: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .topbar input {
@@ -86,8 +104,13 @@ body {
 .card {
   background: white;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
 }
 
 /* INPUTS */
@@ -101,7 +124,13 @@ input, select {
   padding: 10px;
   margin: 5px 0 15px;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+input:focus, select:focus {
+  border-color: #1e73be;
+  outline: none;
 }
 
 /* BUTTON */
@@ -111,8 +140,14 @@ button {
   color: white;
   padding: 12px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: 0.2s;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #155a94;
 }
 
 /* GRID LIST */
@@ -122,6 +157,17 @@ button {
   gap: 15px;
 }
 
+/* DASHBOARD CARDS */
+#dashboard .card {
+  text-align: center;
+}
+
+#dashboard h1 {
+  font-size: 28px;
+  margin-top: 10px;
+  color: #1e73be;
+}
+
 /* SECTIONS */
 .section {
   display: none;
@@ -129,4 +175,14 @@ button {
 
 .section.active {
   display: block;
+}
+
+/* SCROLLBONITO */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 5px;
 }
