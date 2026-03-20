@@ -21,10 +21,9 @@
     <nav>
       <p class="menu-title">Excursiones</p>
       <ul>
-        <li onclick="showSection('reservas')">Lista de Reservas</li>
+        <li onclick="showSection('reservas')">Reservas Confirmadas</li>
         <li onclick="showSection('nueva')">Nueva Reserva</li>
-        <li>Catálogo</li>
-        <li>Reservas In House</li>
+        <li onclick="showSection('excursiones')">Gestión de Excursiones</li>
       </ul>
 
       <p class="menu-title">Traslados</p>
@@ -49,7 +48,7 @@
         <div class="form-grid">
 
           <div class="card">
-            <h4>Información de la Excursión</h4>
+            <h4>Información</h4>
 
             <label>Cliente</label>
             <input id="cliente">
@@ -58,16 +57,22 @@
             <input id="hotel">
 
             <label>Excursión</label>
-            <select id="tour">
-              <option>Buggies</option>
-              <option>Isla Saona</option>
-            </select>
+            <select id="tour"></select>
+
+            <label>Fecha</label>
+            <input type="date" id="fecha">
 
             <label>Adultos</label>
             <input id="adultos" type="number">
 
             <label>Niños</label>
             <input id="ninos" type="number">
+
+            <label>Descuento</label>
+            <input id="descuento" type="number" placeholder="0">
+
+            <label>Total</label>
+            <input id="total" readonly>
 
             <button onclick="guardarReserva()">Guardar</button>
           </div>
@@ -76,14 +81,27 @@
 
       </div>
 
-<li onclick="showSection('reservas')">Reservas Confirmadas</li>
-<li onclick="showSection('nueva')">Nueva Reserva</li>
-<li onclick="showSection('excursiones')">Excursiones</li>
-      
-      <!-- LISTA -->
+      <!-- RESERVAS -->
       <div id="reservas" class="section">
-        <h2 class="title">LISTA DE RESERVAS</h2>
+        <h2 class="title">RESERVAS CONFIRMADAS</h2>
         <div id="lista" class="grid"></div>
+      </div>
+
+      <!-- EXCURSIONES -->
+      <div id="excursiones" class="section">
+        <h2 class="title">GESTIÓN DE EXCURSIONES</h2>
+
+        <div class="card">
+          <h4>Nueva Excursión</h4>
+
+          <input id="nombreExcursion" placeholder="Nombre">
+          <input id="precioAdulto" type="number" placeholder="Precio Adulto">
+          <input id="precioNino" type="number" placeholder="Precio Niño">
+
+          <button onclick="guardarExcursion()">Guardar Excursión</button>
+        </div>
+
+        <div id="listaExcursiones"></div>
       </div>
 
     </div>
@@ -92,7 +110,7 @@
 
 </div>
 
-<!-- 🔥 Firebase PRIMERO -->
+<!-- 🔥 Firebase -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
@@ -111,10 +129,8 @@
   const db = firebase.firestore();
 </script>
 
-<!-- 🔥 TU JS SIEMPRE AL FINAL -->
+<!-- TU JS -->
 <script src="app.js"></script>
-
-
 
 </body>
 </html>
