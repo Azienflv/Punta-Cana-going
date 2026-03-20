@@ -1,27 +1,27 @@
-/* GENERAL */
+/* 🌍 GENERAL */
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background: #eef1f5;
+  background: #f4f6fb;
 }
 
 .layout {
   display: flex;
 }
 
-/* SIDEBAR */
+/* 🔥 SIDEBAR PREMIUM */
 .sidebar {
   width: 260px;
-  background: #ffffff;
+  background: #0f172a;
+  color: #fff;
   height: 100vh;
-  border-right: 1px solid #ddd;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+  box-shadow: 4px 0 20px rgba(0,0,0,0.2);
 }
 
 .profile {
   text-align: center;
-  padding: 20px;
-  background: linear-gradient(135deg, #f0c9a4, #e6b48c);
+  padding: 25px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .profile img {
@@ -29,36 +29,40 @@ body {
   margin-bottom: 10px;
 }
 
+.profile h3 {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* MENÚ */
 .menu-title {
   padding: 15px;
-  font-size: 14px;
-  color: #555;
+  font-size: 13px;
+  color: #94a3b8;
   cursor: pointer;
-  font-weight: bold;
-  border-top: 1px solid #eee;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* SUBMENU */
-#submenuExcursiones {
-  transition: all 0.3s ease;
-}
-
 .sidebar ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 
 .sidebar li {
   padding: 12px 25px;
   cursor: pointer;
   font-size: 14px;
-  color: #444;
-  transition: all 0.2s;
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
 }
 
 .sidebar li:hover {
-  background: #f2f2f2;
+  background: #1e293b;
   padding-left: 30px;
 }
 
@@ -67,105 +71,109 @@ body {
   flex: 1;
 }
 
-/* TOPBAR */
+/* 🔥 TOPBAR PREMIUM */
 .topbar {
-  background: #1e73be;
-  padding: 15px;
-  display: flex;
-  align-items: center;
+  background: #ffffff;
+  padding: 15px 25px;
+  border-bottom: 1px solid #eee;
 }
 
 .topbar input {
-  width: 300px;
+  width: 280px;
   padding: 10px;
-  border-radius: 5px;
-  border: none;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }
 
 /* CONTENT */
 .content {
-  padding: 25px;
+  padding: 30px;
 }
 
 /* TITLES */
 .title {
-  color: #1e73be;
-  margin-bottom: 20px;
+  color: #0f172a;
+  margin-bottom: 25px;
+  font-weight: 600;
 }
 
 /* GRID */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 25px;
 }
 
-/* CARD */
+/* 💎 CARD PREMIUM */
 .card {
-  background: white;
+  background: #ffffff;
   padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+  transition: 0.25s;
 }
 
 .card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px);
 }
 
 /* INPUTS */
-label {
-  font-size: 13px;
-  color: #555;
-}
-
 input, select {
   width: 100%;
-  padding: 10px;
+  padding: 11px;
   margin: 5px 0 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f9fafb;
   transition: 0.2s;
 }
 
 input:focus, select:focus {
-  border-color: #1e73be;
+  border-color: #3b82f6;
+  background: #fff;
   outline: none;
 }
 
-/* BUTTON */
+/* 🔥 BOTONES PRO */
 button {
   width: 100%;
-  background: #1e73be;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   padding: 12px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.2s;
-  font-weight: bold;
+  transition: 0.25s;
+  font-weight: 600;
 }
 
 button:hover {
-  background: #155a94;
+  transform: scale(1.03);
+  box-shadow: 0 5px 15px rgba(59,130,246,0.3);
 }
 
 /* GRID LIST */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
 
-/* DASHBOARD CARDS */
+/* 📊 DASHBOARD */
 #dashboard .card {
   text-align: center;
+  padding: 25px;
 }
 
 #dashboard h1 {
-  font-size: 28px;
+  font-size: 32px;
   margin-top: 10px;
-  color: #1e73be;
+  color: #3b82f6;
+}
+
+#dashboard h3 {
+  color: #64748b;
+  font-weight: 500;
 }
 
 /* SECTIONS */
@@ -177,12 +185,12 @@ button:hover {
   display: block;
 }
 
-/* SCROLLBONITO */
+/* SCROLL */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 5px;
+  background: #cbd5f5;
+  border-radius: 10px;
 }
