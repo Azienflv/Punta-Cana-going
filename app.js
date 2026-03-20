@@ -1,7 +1,7 @@
-// 🔹 MENÚ DESPLEGABLE
+// 🔹 MENU
 function toggleMenu() {
   const menu = document.getElementById("submenuExcursiones");
-  menu.style.display = menu.style.display === "none" ? "block" : "none";
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
 // 🔹 CAMBIO DE SECCIÓN
@@ -36,23 +36,27 @@ function cargarDashboard() {
       if (r.fecha === hoy) ingresosHoy += total;
     });
 
-    totalIngresos = totalIngresos.toFixed(2);
-
-    totalIngresos && (totalIngresos = totalIngresos);
-
-    document.getElementById("totalIngresos").innerText = totalIngresos;
+    document.getElementById("totalIngresos").innerText = totalIngresos.toFixed(2);
     document.getElementById("totalReservas").innerText = totalReservas;
-    document.getElementById("ingresosHoy").innerText = ingresosHoy;
+    document.getElementById("ingresosHoy").innerText = ingresosHoy.toFixed(2);
   });
 }
 
 // 🔹 EXCURSIONES
 function guardarExcursion() {
+
   db.collection("excursiones").add({
     nombre: nombreExcursion.value,
     precioAdulto: precioAdulto.value,
     precioNino: precioNino.value
-  }).then(() => cargarExcursiones());
+  }).then(() => {
+
+    nombreExcursion.value = "";
+    precioAdulto.value = "";
+    precioNino.value = "";
+
+    cargarExcursiones();
+  });
 }
 
 function cargarExcursiones() {
@@ -68,16 +72,16 @@ function cargarExcursiones() {
 
       listaExcursiones.innerHTML += `
         <div class="card">
-          ${e.nombre}<br>
-          👨 ${e.precioAdulto} | 👶 ${e.precioNino}
+          <b>${e.nombre}</b><br>
+          👨 $${e.precioAdulto} | 👶 $${e.precioNino}
         </div>
       `;
 
       tour.innerHTML += `
         <option value="${e.nombre}" 
-          data-adulto="${e.precioAdulto}" 
-          data-nino="${e.precioNino}">
-          ${e.nombre}
+        data-adulto="${e.precioAdulto}" 
+        data-nino="${e.precioNino}">
+        ${e.nombre}
         </option>
       `;
     });
@@ -100,8 +104,10 @@ function calcularTotal() {
   total.value = totalCalc;
 }
 
-document.addEventListener("input", calcularTotal);
-document.addEventListener("change", calcularTotal);
+// 🔹 EVENTOS SOLO EN INPUTS
+["adultos", "ninos", "descuento", "tour"].forEach(id => {
+  document.getElementById(id).addEventListener("input", calcularTotal);
+});
 
 // 🔹 GUARDAR RESERVA
 function guardarReserva() {
@@ -113,82 +119,41 @@ function guardarReserva() {
     adultos: adultos.value,
     ninos: ninos.value,
     fecha: fecha.value,
-    descuento: descuento.value,
-    total: total.value
+    descuento: descuento.value || 0,
+    total: total.value || 0
   };
 
   db.collection("reservas").add(reserva).then(() => {
+
     generarVoucher(reserva);
+    limpiarFormulario();
     mostrarReservas();
     cargarDashboard();
   });
 }
 
+// 🔹 LIMPIAR
+function limpiarFormulario() {
+  cliente.value = "";
+  hotel.value = "";
+  adultos.value = "";
+  ninos.value = "";
+  descuento.value = "";
+  total.value = "";
+}
 
-  :::writing{variant=“standard” id=“voucher-pro”}
-/* 🔥 VOUCHER PROFESIONAL ESTILO AGENCIA */
+// 🔹 VOUCHER SIMPLE (temporal seguro)
 function generarVoucher(r) {
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // 🔹 LOGO
-  const img = new Image();
-  img.src = "logo.png";
-
-  // 🔹 HEADER
-  doc.setFillColor(240, 240, 240);
-  doc.rect(0, 0, 210, 30, "F");
-
-  doc.addImage(img, "PNG", 10, 5, 30, 20);
-
-  doc.setFontSize(18);
-  doc.text("PCG TOURS", 50, 15);
-
-  doc.setFontSize(10);
-  doc.text("Tour Voucher", 50, 22);
-
-  // 🔹 INFO GENERAL
-  doc.setFontSize(12);
-
-  doc.text(`Cliente: ${r.cliente}`, 10, 50);
-  doc.text(`Hotel: ${r.hotel}`, 10, 60);
-  doc.text(`Excursión: ${r.tour}`, 10, 70);
-  doc.text(`Fecha: ${r.fecha}`, 10, 80);
-
-  // 🔹 DETALLE
-  doc.line(10, 90, 200, 90);
-
-  doc.text(`Adultos: ${r.adultos}`, 10, 100);
-  doc.text(`Niños: ${r.ninos}`, 10, 110);
-  doc.text(`Descuento: $${r.descuento}`, 10, 120);
-
-  doc.setFontSize(16);
-  doc.text(`TOTAL: $${r.total}`, 10, 140);
-
-  // 🔹 POLÍTICAS (igual estilo OTIUM)
-  doc.setFontSize(9);
-
-  doc.text("POLÍTICAS DE CANCELACIÓN Y/O REEMBOLSO", 10, 160);
-
-  doc.text(
-`a) Cancelaciones con 48 horas antes del tour.
-b) Cancelaciones por enfermedad requieren certificado médico.
-c) No hay reembolso por no presentación.
-d) No aplica en tours con descuento.`,
-  10,
-  168
-  );
-
-  doc.text("Punta Cana Going - PCG Tours", 10, 190);
+  doc.text(`Cliente: ${r.cliente}`, 10, 20);
+  doc.text(`Tour: ${r.tour}`, 10, 30);
+  doc.text(`Total: $${r.total}`, 10, 40);
 
   doc.save(`voucher_${r.cliente}.pdf`);
 }
-
-900000);
-}
-:::
-
 
 // 🔹 MOSTRAR RESERVAS
 function mostrarReservas() {
@@ -205,14 +170,14 @@ function mostrarReservas() {
         <div class="card">
           ${r.cliente}<br>
           ${r.tour}<br>
-          💰 ${r.total}
+          💰 $${r.total}
         </div>
       `;
     });
   });
 }
 
-// 🔹 INICIO
+// 🔹 INIT
 window.onload = () => {
   mostrarReservas();
   cargarExcursiones();
