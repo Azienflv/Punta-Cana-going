@@ -1,5 +1,3 @@
-let reservas = JSON.parse(localStorage.getItem("reservas")) || [];
-
 function showSection(id) {
   document.querySelectorAll(".section").forEach(sec => {
     sec.classList.remove("active");
@@ -7,45 +5,42 @@ function showSection(id) {
   document.getElementById(id).classList.add("active");
 }
 
+// 🔥 GUARDAR EN FIREBASE
 function guardarReserva() {
 
+  const cliente = document.getElementById("cliente").value;
+  const hotel = document.getElementById("hotel").value;
+  const tour = document.getElementById("tour").value;
+  const adultos = document.getElementById("adultos").value;
+  const ninos = document.getElementById("ninos").value;
+
+  if (!cliente || !hotel) {
+    alert("Completa los campos");
+    return;
+  }
+
   const reserva = {
-    cliente: document.getElementById("cliente").value,
-    hotel: document.getElementById("hotel").value,
-    tour: document.getElementById("tour").value,
-    adultos: document.getElementById("adultos").value,
-    ninos: document.getElementById("ninos").value,
+    cliente,
+    hotel,
+    tour,
+    adultos,
+    ninos,
     fecha: new Date()
   };
 
   db.collection("reservas").add(reserva)
     .then(() => {
       alert("Guardado en Firebase ✅");
+      limpiarFormulario();
       mostrarReservas();
     })
     .catch((error) => {
       console.error("Error:", error);
+      alert("Error al guardar");
     });
 }
 
-  try {
-    await db.collection("reservas").add(reserva);
-    alert("Guardado en la nube ☁️");
-
-    mostrarReservas();
-
-  } catch (error) {
-    console.error("Error:", error);
-  }
-}
-
-  reservas.push(reserva);
-  localStorage.setItem("reservas", JSON.stringify(reservas));
-
-  mostrarReservas();
-  alert("Guardado ✔");
-}
-
+// 🔥 MOSTRAR RESERVAS
 function mostrarReservas() {
 
   const lista = document.getElementById("lista");
@@ -69,4 +64,13 @@ function mostrarReservas() {
   });
 }
 
-mostrarReservas();
+// 🔥 LIMPIAR FORMULARIO
+function limpiarFormulario() {
+  document.getElementById("cliente").value = "";
+  document.getElementById("hotel").value = "";
+  document.getElementById("adultos").value = "";
+  document.getElementById("ninos").value = "";
+}
+
+// 🔥 CARGAR AL INICIO
+window.onload = mostrarReservas;
