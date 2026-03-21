@@ -142,100 +142,107 @@ function limpiarFormulario() {
   total.value = "";
 }
 
-function generarVoucher(r) {
+function generarVoucher(reserva, idReserva) {
 
   const { jsPDF } = window.jspdf;
+
   const doc = new jsPDF();
 
-  const img = new Image();
-  img.src = "logo.png";
+  const cliente = reserva.cliente;
+  const hotel = reserva.hotel;
+  const tour = reserva.tour;
+  const fecha = reserva.fecha;
+  const adultos = reserva.adultos;
+  const ninos = reserva.ninos;
 
-  img.onload = function () {
+  const html = `
+  <div style="font-family: Arial; width: 800px; margin: auto; color:#333;">
 
-    // 🔹 HEADER GRIS
-    doc.setFillColor(230, 230, 230);
-    doc.rect(0, 0, 210, 35, "F");
+    <div style="background:#e5e5e5; padding:20px; display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center;">
+        <img src="https://i.imgur.com/yourlogo.png" style="width:70px; margin-right:15px;">
+        <div>
+          <h2 style="margin:0;">Cupón de Excursión</h2>
+          <span>Tour Voucher</span>
+        </div>
+      </div>
 
-    // 🔹 LOGO
-    doc.addImage(img, "PNG", 10, 5, 30, 25);
+      <div style="text-align:right;">
+        <b>PCG TOURS</b>
+      </div>
+    </div>
 
-    // 🔹 TITULO
-    doc.setFontSize(18);
-    doc.text("Cupón de Excursión", 50, 15);
+    <div style="padding:15px;">
+      <div style="display:flex; justify-content:space-between;">
+        <div>
+          <b>AGENCIA:</b> PCG TOURS<br>
+          <b>#REFER.:</b> __________
+        </div>
 
-    doc.setFontSize(12);
-    doc.text("Tour Voucher", 50, 23);
+        <div>
+          <b>No. TICKET:</b> ${idReserva}
+        </div>
+      </div>
+    </div>
 
-    // 🔹 INFO SUPERIOR
-    doc.setFontSize(10);
+    <hr>
 
-    doc.text("AGENCIA: PCG TOURS", 10, 45);
-    doc.text("No. TICKET: PCG-" + Date.now().toString().slice(-6), 140, 45);
+    <div style="padding:15px;">
+      <h2 style="margin:0;">${tour.toUpperCase()}</h2>
+      <span>${tour}</span>
+    </div>
 
-    doc.line(10, 48, 200, 48);
+    <div style="padding:15px; display:flex; justify-content:space-between;">
+      <div>
+        <p><b>NOMBRE / NAME:</b> ${cliente}</p>
+        <p><b>HOTEL:</b> ${hotel}</p>
+        <p><b>PICK UP:</b> RECEPCIÓN NIVEL 1 (07:40)</p>
+      </div>
 
-    // 🔹 NOMBRE TOUR GRANDE
-    doc.setFontSize(16);
-    doc.text(r.tour.toUpperCase(), 10, 60);
+      <div>
+        <p><b>No. RESERVA:</b> ${idReserva}</p>
+        <p><b>FECHA / DATE:</b> ${fecha}</p>
+        <p><b>PAXS:</b> ${adultos}ADL ${ninos ? `/${ninos}CHD` : ""}</p>
+      </div>
+    </div>
 
-    doc.setFontSize(11);
-    doc.text(r.tour, 10, 67);
+    <hr>
 
-    // 🔹 CLIENTE INFO
-    doc.setFontSize(11);
+    <div style="padding:15px; font-size:12px; line-height:1.4;">
 
-    doc.text(`NOMBRE: ${r.cliente}`, 10, 80);
-    doc.text(`HOTEL: ${r.hotel}`, 10, 88);
-    doc.text(`FECHA: ${r.fecha}`, 10, 96);
+          <b>POLÍTICAS DE CANCELACIÓN Y/O REEMBOLSO</b><br><br>
 
-    doc.text(`PAX: ${r.adultos} ADL / ${r.ninos} CHD`, 140, 88);
+    a) Las cancelaciones son aceptadas con 48 hrs. antes del inicio del servicio y para recibir reembolso es necesario presentar el cupón original de la compra, de otra manera no habrá ningún tipo de reembolso.<br>
+    b) Para cancelaciones por enfermedad, el cliente deberá presentar un Certificado Médico expedido por el médico del hotel o por una clínica privada, a fin de confirmar la incapacidad de realizar el tour (No aceptamos recetas de farmacias).<br>
+    c) No se aceptan cancelaciones ni cambios el mismo día de la actividad.<br>
+    d) No habrá reembolsos en caso de no presentarse a tiempo el día/horario establecidos de la actividad o servicio.<br>
+    e) No aplican reembolsos en Paquetes o cuando exista un descuento en el Tour.<br>
+    f) No se aceptan cancelaciones para reservas especiales.<br><br>
 
-    doc.line(10, 105, 200, 105);
+    El cliente asume la responsabilidad de la compra y no habrá ningún tipo de reembolso.<br><br>
 
-    // 🔹 DETALLE
-    doc.setFontSize(11);
+    <b>CANCELLATION & REFUND POLICIES</b><br><br>
 
-    doc.text(`Adultos: ${r.adultos}`, 10, 115);
-    doc.text(`Niños: ${r.ninos}`, 10, 123);
-    doc.text(`Descuento: $${r.descuento}`, 10, 131);
+    a) Cancellation/refund proceeds with more than 48 hrs. prior to tour commencement and it is mandatory to return the original coupon of the purchase, otherwise, these are non-refundable.<br>
+    b) Cancellation due to illness, client(s) must present a Medical Certificate from the hotel’s doctor or a private hospital, in order to confirm that you were unable to take your tour (Prescriptions from pharmacies are NOT accepted).<br>
+    c) Cancellations or changes are not accepted the same day of the activity.<br>
+    d) NO refunds will be issued if you don’t show up on the established Date/Time of your tour or service.<br>
+    e) No refunds will apply on Packages or Tours with any kind of discount.<br>
+    f) There’s no right to cancel special reservations.<br><br>
+      <b>PCG TOURS</b>
 
-    doc.setFontSize(14);
-    doc.text(`TOTAL: $${r.total}`, 10, 145);
+    </div>
 
-    // 🔹 POLÍTICAS (igual estilo OTIUM)
-    doc.setFontSize(9);
+  </div>
+  `;
 
-    doc.text("POLÍTICAS DE CANCELACIÓN Y/O REEMBOLSO", 10, 160);
-
-    doc.text(
-`a) Cancelaciones con 48 hrs antes del servicio.
-b) Cancelaciones por enfermedad requieren certificado médico.
-c) No hay reembolso por no presentarse.
-d) No aplica en tours con descuento.
-e) El cliente asume responsabilidad total de la compra.`,
-      10,
-      168
-    );
-
-    // 🔹 INGLES
-    doc.text("CANCELLATION & REFUND POLICIES", 10, 190);
-
-    doc.text(
-`a) 48 hours cancellation required.
-b) Medical certificate required for illness.
-c) No refund for no-show.
-d) No refunds on discounted tours.`,
-      10,
-      196
-    );
-
-    // 🔹 FOOTER
-    doc.setFontSize(10);
-    doc.text("Punta Cana Going - PCG Tours", 10, 210);
-
-    // 🔹 GUARDAR
-    doc.save(`voucher_${r.cliente}.pdf`);
-  };
+  doc.html(html, {
+    callback: function (doc) {
+      doc.save(`Voucher_${cliente}.pdf`);
+    },
+    x: 10,
+    y: 10
+  });
 }
 
 // 🔹 MOSTRAR RESERVAS
