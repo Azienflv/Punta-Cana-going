@@ -18,24 +18,34 @@
 <div class="layout">
 
   <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="profile">
-      <img src="https://i.pravatar.cc/80">
-      <h3>PCG Tours</h3>
-    </div>
+<aside class="sidebar">
 
-    <nav>
-      <p class="menu-title" onclick="toggleMenu()">Menú ⬇</p>
+  <div class="logo">
+    <img src="logo.png" alt="PCG">
+    <h2>PCG Tours</h2>
+  </div>
 
-      <ul id="submenuExcursiones" style="display:block;">
-        <li onclick="showSection('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</li>
-        <li onclick="showSection('nueva')"><i class="fas fa-plus-circle"></i> Nueva Reserva</li>
-        <li onclick="showSection('reservas')"><i class="fas fa-list"></i> Reservas</li>
-        <li onclick="showSection('excursiones')"><i class="fas fa-map"></i> Excursiones</li>
-      </ul>
-    </nav>
-  </aside>
+  <ul class="menu">
 
+    <li onclick="showSection('dashboard')" class="active">
+      <span>📊</span> Dashboard
+    </li>
+
+    <li onclick="showSection('nueva')">
+      <span>➕</span> Nueva Reserva
+    </li>
+
+    <li onclick="showSection('reservas')">
+      <span>📋</span> Reservas
+    </li>
+
+    <li onclick="showSection('excursiones')">
+      <span>🏝</span> Excursiones
+    </li>
+
+  </ul>
+
+</aside>
   <!-- MAIN -->
   <main class="main">
 
