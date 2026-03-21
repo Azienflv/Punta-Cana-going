@@ -142,17 +142,67 @@ function limpiarFormulario() {
   total.value = "";
 }
 
-// 🔹 VOUCHER SIMPLE (temporal seguro)
 function generarVoucher(r) {
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  doc.text(`Cliente: ${r.cliente}`, 10, 20);
-  doc.text(`Tour: ${r.tour}`, 10, 30);
-  doc.text(`Total: $${r.total}`, 10, 40);
+  // 🔹 LOGO
+  const img = new Image();
+  img.src = "logo.png";
 
-  doc.save(`voucher_${r.cliente}.pdf`);
+  img.onload = function () {
+
+    // 🔹 HEADER
+    doc.setFillColor(240, 240, 240);
+    doc.rect(0, 0, 210, 30, "F");
+
+    doc.addImage(img, "PNG", 10, 5, 30, 20);
+
+    doc.setFontSize(18);
+    doc.text("PCG TOURS", 50, 15);
+
+    doc.setFontSize(10);
+    doc.text("Tour Voucher", 50, 22);
+
+    // 🔹 INFO CLIENTE
+    doc.setFontSize(12);
+
+    doc.text(`Cliente: ${r.cliente}`, 10, 50);
+    doc.text(`Hotel: ${r.hotel}`, 10, 60);
+    doc.text(`Excursión: ${r.tour}`, 10, 70);
+    doc.text(`Fecha: ${r.fecha}`, 10, 80);
+
+    // 🔹 LÍNEA
+    doc.line(10, 90, 200, 90);
+
+    // 🔹 DETALLES
+    doc.text(`Adultos: ${r.adultos}`, 10, 100);
+    doc.text(`Niños: ${r.ninos}`, 10, 110);
+    doc.text(`Descuento: $${r.descuento}`, 10, 120);
+
+    doc.setFontSize(16);
+    doc.text(`TOTAL: $${r.total}`, 10, 140);
+
+    // 🔹 POLÍTICAS
+    doc.setFontSize(9);
+
+    doc.text("POLÍTICAS DE CANCELACIÓN Y/O REEMBOLSO", 10, 160);
+
+    doc.text(
+`a) Cancelaciones con 48 horas antes del tour.
+b) Cancelaciones por enfermedad requieren certificado médico.
+c) No hay reembolso por no presentación.
+d) No aplica en tours con descuento.`,
+      10,
+      168
+    );
+
+    // 🔹 FOOTER
+    doc.text("Punta Cana Going - PCG Tours", 10, 190);
+
+    doc.save(`voucher_${r.cliente}.pdf`);
+  };
 }
 
 // 🔹 MOSTRAR RESERVAS
