@@ -281,6 +281,10 @@ function mostrarReservas() {
   });
 }
 
+function toggleSubmenu(el) {
+  el.classList.toggle("active");
+}
+
 // 🔹 INIT
 window.onload = () => {
   mostrarReservas();
