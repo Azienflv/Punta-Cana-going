@@ -156,61 +156,71 @@ function generarVoucher(reserva, idReserva) {
   const ninos = reserva.ninos;
 
   const html = `
-  <div style="font-family: Arial; width: 800px; margin: auto; color:#333;">
+<div style="font-family: Arial; width: 800px; margin:auto; color:#333; border:1px solid #ddd;">
 
-    <div style="background:#e5e5e5; padding:20px; display:flex; justify-content:space-between; align-items:center;">
-      <div style="display:flex; align-items:center;">
-        <img src="https://i.imgur.com/yourlogo.png" style="width:70px; margin-right:15px;">
-        <div>
-          <h2 style="margin:0;">Cupón de Excursión</h2>
-          <span>Tour Voucher</span>
-        </div>
-      </div>
+  <!-- HEADER -->
+  <div style="background:#e9e9e9; padding:20px; display:flex; justify-content:space-between; align-items:center;">
 
-      <div style="text-align:right;">
-        <b>PCG TOURS</b>
-      </div>
-    </div>
-
-    <div style="padding:15px;">
-      <div style="display:flex; justify-content:space-between;">
-        <div>
-          <b>AGENCIA:</b> PCG TOURS<br>
-          <b>#REFER.:</b> __________
-        </div>
-
-        <div>
-          <b>No. TICKET:</b> ${idReserva}
-        </div>
-      </div>
-    </div>
-
-    <hr>
-
-    <div style="padding:15px;">
-      <h2 style="margin:0;">${tour.toUpperCase()}</h2>
-      <span>${tour}</span>
-    </div>
-
-    <div style="padding:15px; display:flex; justify-content:space-between;">
+    <div style="display:flex; align-items:center;">
+      <img src="https://i.imgur.com/REEMPLAZA_TU_LOGO.png" style="width:80px; margin-right:15px;">
       <div>
-        <p><b>NOMBRE / NAME:</b> ${cliente}</p>
-        <p><b>HOTEL:</b> ${hotel}</p>
-        <p><b>PICK UP:</b> RECEPCIÓN NIVEL 1 (07:40)</p>
+        <h2 style="margin:0;">Cupón de Excursión</h2>
+        <span style="color:#777;">Tour Voucher</span>
+      </div>
+    </div>
+
+    <div style="text-align:right;">
+      <b style="font-size:18px;">PCG TOURS</b><br>
+      <span style="font-size:12px;">República Dominicana</span>
+    </div>
+
+  </div>
+
+  <!-- INFO -->
+  <div style="padding:15px; font-size:14px;">
+    <div style="display:flex; justify-content:space-between;">
+      <div>
+        <b>AGENCIA:</b> PCG TOURS<br>
+        <b>#REFER.:</b> ------
       </div>
 
       <div>
-        <p><b>No. RESERVA:</b> ${idReserva}</p>
-        <p><b>FECHA / DATE:</b> ${fecha}</p>
-        <p><b>PAXS:</b> ${adultos}ADL ${ninos ? `/${ninos}CHD` : ""}</p>
+        <b>No. TICKET:</b> ${idReserva}
       </div>
     </div>
+  </div>
 
-    <hr>
+  <div style="border-top:1px dashed #aaa;"></div>
 
-    <div style="padding:15px; font-size:12px; line-height:1.4;">
+  <!-- TITULO TOUR -->
+  <div style="padding:15px;">
+    <h2 style="margin:0; letter-spacing:1px;">${tour.toUpperCase()}</h2>
+    <span style="color:#777;">${tour}</span>
+  </div>
 
-          <b>POLÍTICAS DE CANCELACIÓN Y/O REEMBOLSO</b><br><br>
+  <!-- DATOS -->
+  <div style="padding:15px; display:flex; justify-content:space-between; font-size:14px;">
+
+    <div>
+      <p><b>NOMBRE / NAME:</b> ${cliente}</p>
+      <p><b>HOTEL:</b> ${hotel}</p>
+      <p><b>PICK UP:</b> RECEPCIÓN NIVEL 1 (07:40)</p>
+    </div>
+
+    <div>
+      <p><b>No. RESERVA:</b> ${idReserva}</p>
+      <p><b>FECHA / DATE:</b> ${fecha}</p>
+      <p><b>PAXS:</b> ${adultos} ADL ${ninos ? ` / ${ninos} CHD` : ""}</p>
+    </div>
+
+  </div>
+
+  <div style="border-top:1px dashed #aaa;"></div>
+
+  <!-- POLÍTICAS -->
+  <div style="padding:15px; font-size:11px; line-height:1.5;">
+
+ <b>POLÍTICAS DE CANCELACIÓN Y/O REEMBOLSO</b><br><br>
 
     a) Las cancelaciones son aceptadas con 48 hrs. antes del inicio del servicio y para recibir reembolso es necesario presentar el cupón original de la compra, de otra manera no habrá ningún tipo de reembolso.<br>
     b) Para cancelaciones por enfermedad, el cliente deberá presentar un Certificado Médico expedido por el médico del hotel o por una clínica privada, a fin de confirmar la incapacidad de realizar el tour (No aceptamos recetas de farmacias).<br>
@@ -229,12 +239,16 @@ function generarVoucher(reserva, idReserva) {
     d) NO refunds will be issued if you don’t show up on the established Date/Time of your tour or service.<br>
     e) No refunds will apply on Packages or Tours with any kind of discount.<br>
     f) There’s no right to cancel special reservations.<br><br>
-      <b>PCG TOURS</b>
 
+    <div style="text-align:center; margin-top:20px;">
+      <b>PCG TOURS</b><br>
+      <span style="font-size:10px;">Servicio turístico profesional</span>
     </div>
 
   </div>
-  `;
+
+</div>
+`;
 
   doc.html(html, {
     callback: function (doc) {
