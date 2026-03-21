@@ -147,60 +147,93 @@ function generarVoucher(r) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // 🔹 LOGO
   const img = new Image();
   img.src = "logo.png";
 
   img.onload = function () {
 
-    // 🔹 HEADER
-    doc.setFillColor(240, 240, 240);
-    doc.rect(0, 0, 210, 30, "F");
+    // 🔹 HEADER GRIS
+    doc.setFillColor(230, 230, 230);
+    doc.rect(0, 0, 210, 35, "F");
 
-    doc.addImage(img, "PNG", 10, 5, 30, 20);
+    // 🔹 LOGO
+    doc.addImage(img, "PNG", 10, 5, 30, 25);
 
+    // 🔹 TITULO
     doc.setFontSize(18);
-    doc.text("PCG TOURS", 50, 15);
+    doc.text("Cupón de Excursión", 50, 15);
 
-    doc.setFontSize(10);
-    doc.text("Tour Voucher", 50, 22);
-
-    // 🔹 INFO CLIENTE
     doc.setFontSize(12);
+    doc.text("Tour Voucher", 50, 23);
 
-    doc.text(`Cliente: ${r.cliente}`, 10, 50);
-    doc.text(`Hotel: ${r.hotel}`, 10, 60);
-    doc.text(`Excursión: ${r.tour}`, 10, 70);
-    doc.text(`Fecha: ${r.fecha}`, 10, 80);
+    // 🔹 INFO SUPERIOR
+    doc.setFontSize(10);
 
-    // 🔹 LÍNEA
-    doc.line(10, 90, 200, 90);
+    doc.text("AGENCIA: PCG TOURS", 10, 45);
+    doc.text("No. TICKET: PCG-" + Date.now().toString().slice(-6), 140, 45);
 
-    // 🔹 DETALLES
-    doc.text(`Adultos: ${r.adultos}`, 10, 100);
-    doc.text(`Niños: ${r.ninos}`, 10, 110);
-    doc.text(`Descuento: $${r.descuento}`, 10, 120);
+    doc.line(10, 48, 200, 48);
 
+    // 🔹 NOMBRE TOUR GRANDE
     doc.setFontSize(16);
-    doc.text(`TOTAL: $${r.total}`, 10, 140);
+    doc.text(r.tour.toUpperCase(), 10, 60);
 
-    // 🔹 POLÍTICAS
+    doc.setFontSize(11);
+    doc.text(r.tour, 10, 67);
+
+    // 🔹 CLIENTE INFO
+    doc.setFontSize(11);
+
+    doc.text(`NOMBRE: ${r.cliente}`, 10, 80);
+    doc.text(`HOTEL: ${r.hotel}`, 10, 88);
+    doc.text(`FECHA: ${r.fecha}`, 10, 96);
+
+    doc.text(`PAX: ${r.adultos} ADL / ${r.ninos} CHD`, 140, 88);
+
+    doc.line(10, 105, 200, 105);
+
+    // 🔹 DETALLE
+    doc.setFontSize(11);
+
+    doc.text(`Adultos: ${r.adultos}`, 10, 115);
+    doc.text(`Niños: ${r.ninos}`, 10, 123);
+    doc.text(`Descuento: $${r.descuento}`, 10, 131);
+
+    doc.setFontSize(14);
+    doc.text(`TOTAL: $${r.total}`, 10, 145);
+
+    // 🔹 POLÍTICAS (igual estilo OTIUM)
     doc.setFontSize(9);
 
     doc.text("POLÍTICAS DE CANCELACIÓN Y/O REEMBOLSO", 10, 160);
 
     doc.text(
-`a) Cancelaciones con 48 horas antes del tour.
+`a) Cancelaciones con 48 hrs antes del servicio.
 b) Cancelaciones por enfermedad requieren certificado médico.
-c) No hay reembolso por no presentación.
-d) No aplica en tours con descuento.`,
+c) No hay reembolso por no presentarse.
+d) No aplica en tours con descuento.
+e) El cliente asume responsabilidad total de la compra.`,
       10,
       168
     );
 
-    // 🔹 FOOTER
-    doc.text("Punta Cana Going - PCG Tours", 10, 190);
+    // 🔹 INGLES
+    doc.text("CANCELLATION & REFUND POLICIES", 10, 190);
 
+    doc.text(
+`a) 48 hours cancellation required.
+b) Medical certificate required for illness.
+c) No refund for no-show.
+d) No refunds on discounted tours.`,
+      10,
+      196
+    );
+
+    // 🔹 FOOTER
+    doc.setFontSize(10);
+    doc.text("Punta Cana Going - PCG Tours", 10, 210);
+
+    // 🔹 GUARDAR
     doc.save(`voucher_${r.cliente}.pdf`);
   };
 }
