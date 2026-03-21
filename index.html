@@ -27,23 +27,40 @@
 
   <ul class="menu">
 
-    <li onclick="showSection('dashboard')" class="active">
-      <span>📊</span> Dashboard
-    </li>
+  <li onclick="showSection('dashboard')" class="active">
+    <i class="fas fa-chart-line"></i>
+    <span>Dashboard</span>
+  </li>
 
-    <li onclick="showSection('nueva')">
-      <span>➕</span> Nueva Reserva
-    </li>
+  <li onclick="showSection('nueva')">
+    <i class="fas fa-plus-circle"></i>
+    <span>Nueva Reserva</span>
+  </li>
 
-    <li onclick="showSection('reservas')">
-      <span>📋</span> Reservas
-    </li>
+  <li onclick="showSection('reservas')">
+    <i class="fas fa-clipboard-list"></i>
+    <span>Reservas</span>
+  </li>
 
-    <li onclick="showSection('excursiones')">
-      <span>🏝</span> Excursiones
-    </li>
+  <!-- EXCURSIONES CON SUBMENÚ -->
+  <li class="menu-toggle" onclick="toggleSubmenu(this)">
+    <div class="menu-flex">
+      <div>
+        <i class="fas fa-person-hiking"></i>
+        <span>Excursiones</span>
+      </div>
+      <i class="fas fa-chevron-down arrow"></i>
+    </div>
+  </li>
 
+  <ul class="submenu">
+    <li onclick="showSection('excursiones')">Catálogo</li>
+    <li onclick="showSection('nueva')">Nueva Reserva</li>
+    <li onclick="showSection('reservas')">Lista de Reservas</li>
+    <li>Reservas In House</li>
   </ul>
+
+</ul>
 
 </aside>
   <!-- MAIN -->
