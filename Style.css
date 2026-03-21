@@ -5,6 +5,7 @@ body {
   background: #f4f6fb;
 }
 
+/* LAYOUT */
 .layout {
   display: flex;
 }
@@ -12,58 +13,114 @@ body {
 /* 🔥 SIDEBAR PREMIUM */
 .sidebar {
   width: 260px;
-  background: #0f172a;
-  color: #fff;
   height: 100vh;
-  box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+  background: linear-gradient(180deg, #0f172a, #1e293b);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 5px 0 20px rgba(0,0,0,0.2);
 }
 
-.profile {
-  text-align: center;
-  padding: 25px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
 }
 
-.profile img {
-  border-radius: 50%;
-  margin-bottom: 10px;
+.logo img {
+  width: 45px;
 }
 
-.profile h3 {
-  margin: 0;
-  font-weight: 500;
+.logo h2 {
+  font-size: 18px;
 }
 
-/* MENÚ */
-.menu-title {
-  padding: 15px;
-  font-size: 13px;
-  color: #94a3b8;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* SUBMENU */
-.sidebar ul {
+/* 🔹 MENU */
+.menu {
   list-style: none;
   padding: 0;
 }
 
-.sidebar li {
-  padding: 12px 25px;
-  cursor: pointer;
-  font-size: 14px;
-  color: #e2e8f0;
+.menu li {
   display: flex;
   align-items: center;
-  gap: 10px;
-  transition: all 0.2s ease;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  color: #e2e8f0;
 }
 
-.sidebar li:hover {
-  background: #1e293b;
-  padding-left: 30px;
+/* HOVER */
+.menu li:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateX(5px);
+}
+
+/* ACTIVO */
+.menu li.active {
+  background: linear-gradient(90deg, #1e73be, #3fa9f5);
+  color: #fff;
+}
+
+/* ICONOS */
+.menu i {
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+/* 🔥 SUBMENU PRO */
+.menu-toggle {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.menu-flex {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submenu {
+  list-style: none;
+  width: 100%;
+  padding-left: 10px;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.submenu li {
+  padding: 10px 35px;
+  font-size: 13px;
+  color: #cbd5f5;
+  border-radius: 8px;
+}
+
+.submenu li:hover {
+  background: rgba(255,255,255,0.08);
+  padding-left: 40px;
+}
+
+/* ACTIVO SUBMENU */
+.menu-toggle.active + .submenu {
+  max-height: 300px;
+}
+
+/* FLECHA */
+.arrow {
+  transition: 0.3s;
+}
+
+.menu-toggle.active .arrow {
+  transform: rotate(180deg);
 }
 
 /* MAIN */
@@ -71,9 +128,9 @@ body {
   flex: 1;
 }
 
-/* 🔥 TOPBAR PREMIUM */
+/* 🔥 TOPBAR */
 .topbar {
-  background: #ffffff;
+  background: white;
   padding: 15px 25px;
   border-bottom: 1px solid #eee;
 }
@@ -90,21 +147,7 @@ body {
   padding: 30px;
 }
 
-/* TITLES */
-.title {
-  color: #0f172a;
-  margin-bottom: 25px;
-  font-weight: 600;
-}
-
-/* GRID */
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-}
-
-/* 💎 CARD PREMIUM */
+/* 💎 CARD */
 .card {
   background: #ffffff;
   padding: 20px;
@@ -115,6 +158,13 @@ body {
 
 .card:hover {
   transform: translateY(-5px);
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 /* INPUTS */
@@ -134,7 +184,7 @@ input:focus, select:focus {
   outline: none;
 }
 
-/* 🔥 BOTONES PRO */
+/* 🔥 BOTONES */
 button {
   width: 100%;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
@@ -150,13 +200,6 @@ button {
 button:hover {
   transform: scale(1.03);
   box-shadow: 0 5px 15px rgba(59,130,246,0.3);
-}
-
-/* GRID LIST */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
 }
 
 /* 📊 DASHBOARD */
@@ -191,146 +234,6 @@ button:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5f5;
+  background: #334155;
   border-radius: 10px;
-}
-
-body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  background: #f4f6fb;
-}
-
-/* LAYOUT */
-.layout {
-  display: flex;
-}
-
-/* SIDEBAR PREMIUM */
-.sidebar {
-  width: 250px;
-  height: 100vh;
-  background: linear-gradient(180deg, #0f172a, #1e293b);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  box-shadow: 5px 0 20px rgba(0,0,0,0.2);
-}
-
-/* LOGO */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
-}
-
-.logo img {
-  width: 45px;
-}
-
-.logo h2 {
-  font-size: 18px;
-}
-
-/* MENU */
-.menu {
-  list-style: none;
-  padding: 0;
-}
-
-.menu li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-/* HOVER */
-.menu li:hover {
-  background: rgba(255,255,255,0.1);
-  transform: translateX(5px);
-}
-
-/* ACTIVO */
-.menu li.active {
-  background: linear-gradient(90deg, #1e73be, #3fa9f5);
-}
-
-/* ICONOS */
-.menu li span {
-  font-size: 18px;
-}
-
-/* MAIN */
-.main {
-  flex: 1;
-}
-
-/* TOPBAR */
-.topbar {
-  background: white;
-  padding: 15px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-}
-
-.topbar input {
-  width: 300px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-/* CONTENT */
-.content {
-  padding: 25px;
-}
-
-/* CARDS */
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-}
-
-/* INPUTS */
-input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-}
-
-/* BUTTON */
-button {
-  width: 100%;
-  background: linear-gradient(90deg, #1e73be, #3fa9f5);
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-/* SECTIONS */
-.section {
-  display: none;
-}
-
-.section.active {
-  display: block;
 }
