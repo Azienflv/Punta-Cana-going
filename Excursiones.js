@@ -10,9 +10,10 @@ const excursiones = [
 "Domitai",
 "Scape Park",
 "El Dorado Park",
-"Jet Ski"
+"Jet Ski" 
 
 ];
+
 
 window.onload = function(){
 
