@@ -7,6 +7,10 @@
 
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+<!-- ICONOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 
 <body>
@@ -24,10 +28,10 @@
       <p class="menu-title" onclick="toggleMenu()">Menú ⬇</p>
 
       <ul id="submenuExcursiones" style="display:block;">
-        <li onclick="showSection('dashboard')">📊 Dashboard</li>
-        <li onclick="showSection('nueva')">➕ Nueva Reserva</li>
-        <li onclick="showSection('reservas')">📋 Reservas</li>
-        <li onclick="showSection('excursiones')">🏝 Excursiones</li>
+        <li onclick="showSection('dashboard')"><i class="fas fa-chart-line"></i> Dashboard</li>
+        <li onclick="showSection('nueva')"><i class="fas fa-plus-circle"></i> Nueva Reserva</li>
+        <li onclick="showSection('reservas')"><i class="fas fa-list"></i> Reservas</li>
+        <li onclick="showSection('excursiones')"><i class="fas fa-map"></i> Excursiones</li>
       </ul>
     </nav>
   </aside>
@@ -127,8 +131,9 @@ const db = firebase.firestore();
 </script>
 
 <!-- PDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
+<!-- TU JS -->
 <script src="app.js"></script>
 
 </body>
